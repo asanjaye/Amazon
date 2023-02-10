@@ -16,17 +16,48 @@ std::string convToLower(std::string src)
 std::set<std::string> parseStringToWords(string rawWords)
 {
 
+//we need to split the string into words by finding all the spaces within the string
+std::set<std::string> wordSet;
+set<string>::iterator it = wordSet.begin();
+stringstream ss(rawWords);
+string word;
+string newWord;
 
+while(ss>>word){
+    word = convToLower(word);
+		newWord = word;
+    //check if the word has any punctuation
+    for(unsigned int i =0; i<word.size(); i++){
+        //if the character is a punctuation, we will split it based on characters before and after it
+        if(ispunct(word[i])){
+            //checking if the size is less than 2
+            if(word.size()<2){
+                newWord = "";
+            }
+            //if the size is greater than 2 or 2
+            else if(i>=2){
+                newWord = word.substr(0,i);
+            }
+            //prints out the ending, assuming that the size is greater than 2
+            else{
+                newWord = word.substr(i+1, word.length());
+        }
 
-
-
-
-
-
-
+    }
+    if(wordSet.size() == 0){
+        wordSet.insert(newWord);
+        set<string>::iterator it = wordSet.begin();
+    }
+    else{
+        wordSet.insert(it,newWord);
+        ++it;
+    }
+    
+}
+}
+return wordSet;
 
 }
-
 /**************************************************
  * COMPLETED - You may use the following functions
  **************************************************/
